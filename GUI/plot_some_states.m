@@ -23,7 +23,7 @@ function varargout = plot_some_states(varargin)
 % See also: GUIDE, GUIDATA, GUIHANDLES
 % Edit the above text to modify the response to help plot_some_states
 
-% Last Modified by GUIDE v2.5 15-Aug-2017 14:29:32
+% Last Modified by GUIDE v2.5 16-Aug-2017 10:31:02
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -156,8 +156,8 @@ end
 % appears once in indexes_used and country_names. Keep order of those
 % arrays ( which is achieved by 'stable'):
 
-indexes_used = unique(indexes_used,'stable')
-country_names = unique(country_names,'stable')
+indexes_used = unique(indexes_used,'stable');
+country_names = unique(country_names,'stable');
 
 % Plot datapoints and Lorenz curve seperately:
 
@@ -221,9 +221,22 @@ pushbutton1_Callback(hObject, eventdata, handles);
 % Change of checkbox initiates a new plot, but with different settings
 % regarding the datapoints. The last country is actually plotted once
 % again, which is eliminated by the unique-Statement in
-% Pushbutton1_Callback.
+% Pushbutton1_Callback. 
 
 
+% --- Executes when user attempts to close figure1.
+function figure1_CloseRequestFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 
-    
-    
+% Hint: delete(hObject) closes the figure
+
+% Reset the indexes_used-array such that the next time, this vector is
+% empty:
+
+global indexes_used
+indexes_used = [];
+
+% Close GUI:
+delete(hObject);
