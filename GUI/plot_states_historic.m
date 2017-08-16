@@ -1,3 +1,4 @@
+
 function varargout = plot_states_historic(varargin)
 % PLOT_STATES_HISTORIC MATLAB code for plot_states_historic.fig
 %      PLOT_STATES_HISTORIC, by itself, creates a new PLOT_STATES_HISTORIC or raises the existing
@@ -46,6 +47,12 @@ end
 
 % --- Executes just before plot_states_historic is made visible.
 function plot_states_historic_OpeningFcn(hObject, eventdata, handles, varargin)
+
+global wbd_data_historic
+global chosen_country
+global year_historic
+global wbd_data
+
 % This function has no output args, see OutputFcn.
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -60,9 +67,9 @@ guidata(hObject, handles);
 
 % UIWAIT makes plot_states_historic wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
-global wbd_data
+
 generate_all_countries;
-global wbd_data_historic
+
 generate_all_countries_historic;
 
 % --- Outputs from this function are returned to the command line.
@@ -81,6 +88,21 @@ function listbox1_Callback(hObject, eventdata, handles)
 % hObject    handle to listbox1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+global wbd_data_historic
+global chosen_country
+global year_historic
+
+countries = get(handles.listbox1,'String');
+chosen_country = countries{get(handles.listbox1,'Value')};
+index_historic = find_index(wbd_data_historic,string(chosen_country));
+year_historic = zeros(1,length(index_historic));
+for i = 1 : length(index_historic)
+    year_historic(i) = wbd_data_historic(index_historic(i)).year_of_data;
+end
+year_historic_cell = cellstr(string(year_historic));
+set(handles.listbox2,'String',cell(year_historic_cell));
+
 
 % Hints: contents = cellstr(get(hObject,'String')) returns listbox1 contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from listbox1
@@ -127,6 +149,7 @@ function listbox2_CreateFcn(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
+
 % Hint: listbox controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -141,7 +164,8 @@ function checkbox1_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of checkbox1
-
+global indexes_used
+indexes_used = indexes_used(1:(end-1));
 pushbutton1_Callback(hObject, eventdata, handles);
 
 % --- Executes on button press in pushbutton1.
@@ -152,16 +176,19 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 
 % Access wbd_data:
 global wbd_data
-
+global year_historic
+global indexes_used
+global wbd_data_historic
 axes(handles.axes1);
 x_values = linspace(0,1,1000);
-A = get(handles.listbox1,'String');
-name = A{get(handles.listbox1,'Value')};
-index = find_index(wbd_data,string(name));
+name = get(handles.listbox1,'String');
+name = name{get(handles.listbox1,'Value')};
+year = get(handles.listbox2,'String');
+%year = year{get(handles.listbox2,'Value')};
+year = year_historic(get(handles.listbox2,'Value'));
 
 
-global indexes_used
-
+index = find_index_year(wbd_data_historic,string(name),year);
 
 % Indexes of wbd_data used:
 indexes_used(end+1) = index;
@@ -173,7 +200,7 @@ country_names = strings(length(indexes_used),1);
 % Fill array of country_names:
 
 for i = 1 : length(indexes_used)
-    country_names(i) = wbd_data(indexes_used(i)).country;
+    country_names(i) = join([wbd_data_historic(indexes_used(i)).country, " ",wbd_data_historic(indexes_used(i)).year_of_data]);
 end
 
 % Make sure, that every country is just plotted once, meaning it just
@@ -186,10 +213,10 @@ country_names = unique(country_names,'stable');
 % Plot datapoints and Lorenz curve seperately:
 
 for i = 1 : length(country_names)
-    epsilon = wbd_data(indexes_used(i)).epsilon;
+    epsilon = wbd_data_historic(indexes_used(i)).epsilon;
     curves(i) = plot(x_values,mixed_lorenz(x_values,epsilon,0.6));
     hold on
-    datapoints(i) = plot(wbd_data(indexes_used(i)).share_pop,wbd_data(indexes_used(i)).cumulated_dist_vector,'+');
+    datapoints(i) = plot(wbd_data_historic(indexes_used(i)).share_pop,wbd_data_historic(indexes_used(i)).cumulated_dist_vector,'+');
     hold on
 end
 
@@ -213,6 +240,12 @@ end
 
 legend(legend_entries,'Location','Northwest')
 legend('show')
+
+set(handles.listbox2,'Value',1);
+% Is needed, as change of country could lead to a value of listbox2, which
+% does not exist, as there are not this many datasets for this country.
+% Application breaks down in these cases. 
+% Value = 1 ensures every country has this value for listbox2.
 
 
 
