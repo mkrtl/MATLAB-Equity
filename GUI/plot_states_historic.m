@@ -23,7 +23,7 @@ function varargout = plot_states_historic(varargin)
 
 % Edit the above text to modify the response to help plot_states_historic
 
-% Last Modified by GUIDE v2.5 16-Aug-2017 11:04:14
+% Last Modified by GUIDE v2.5 16-Aug-2017 17:02:56
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -51,7 +51,6 @@ function plot_states_historic_OpeningFcn(hObject, eventdata, handles, varargin)
 global wbd_data_historic
 global chosen_country
 global year_historic
-global wbd_data
 
 % This function has no output args, see OutputFcn.
 % hObject    handle to figure
@@ -114,16 +113,16 @@ function listbox1_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to listbox1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
-global wbd_data
+global wbd_data_historic
 
-% Fill listbox with names of wbd_data:
+% Fill listbox with names of wbd_data_historic:
 
-listbox_names = cell(1,length(wbd_data));
-for i = 1 : length(wbd_data)
-    listbox_names(i) = cellstr(wbd_data(i).country);
+listbox_names = cell(1,length(wbd_data_historic));
+for i = 1 : length(wbd_data_historic)
+    listbox_names(i) = cellstr(wbd_data_historic(i).country);
 end
-
-% Set listbox object with names of wbd_data:
+listbox_names = unique(listbox_names,'stable');
+% Set listbox object with names of wbd_data_historic:
 
 set(hObject,'String',listbox_names);
 
@@ -173,7 +172,7 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Access wbd_data:
+% Access global variables:
 
 global year_historic
 global indexes_used
@@ -190,7 +189,7 @@ year = year_historic(get(handles.listbox2,'Value'));
 
 index = find_index_year(wbd_data_historic,string(name),year);
 
-% Indexes of wbd_data used:
+% Indexes of wbd_data_historic used:
 indexes_used(end+1) = index;
 
 % Name of the countries plotted:
