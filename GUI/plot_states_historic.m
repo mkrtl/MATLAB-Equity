@@ -93,6 +93,7 @@ global wbd_data_historic
 global chosen_country
 global year_historic
 
+
 countries = get(handles.listbox1,'String');
 chosen_country = countries{get(handles.listbox1,'Value')};
 index_historic = find_index(wbd_data_historic,string(chosen_country));
@@ -164,9 +165,7 @@ function checkbox1_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of checkbox1
-global indexes_used
-indexes_used = indexes_used(1:(end-1));
-pushbutton1_Callback(hObject, eventdata, handles);
+
 
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
@@ -175,10 +174,11 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Access wbd_data:
-global wbd_data
+
 global year_historic
 global indexes_used
 global wbd_data_historic
+
 axes(handles.axes1);
 x_values = linspace(0,1,1000);
 name = get(handles.listbox1,'String');
@@ -222,10 +222,10 @@ end
 
 % Check for 'Datapoints'-checkbox and decide whether or not to display
 % them:
-if ~get(handles.checkbox1,'Value')
-    set(datapoints,'Visible','Off')
-else
+if get(handles.checkbox1,'Value')
     set(datapoints,'Visible','On')
+else
+    set(datapoints,'Visible','Off')
 end     
     
 hold off
