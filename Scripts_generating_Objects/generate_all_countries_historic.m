@@ -1,3 +1,5 @@
+function y = generate_all_countries_historic()
+
 % Generates an array of objects of state class with all the World Bank Data
 % and calls this array wbd_data_historic. To find index of state, use function find_index.
 
@@ -26,7 +28,7 @@ for i = 1 : size_T(1)
        share_pop = [0;0.1;0.2;0.4;0.6;0.8;0.9;1];       % Share of population, 
                                                         %which is fixed for all data
        
-       wbd_data_historic(i) = State(country, dist_vector,... 
+       y(i) = State(country, dist_vector,... 
                                     wbd_gini, share_pop, year_of_data, GDP, total_pop); 
        
                                                         % Generates State object 
