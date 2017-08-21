@@ -1,36 +1,35 @@
-
-function varargout = plot_states_historic(varargin)
-% PLOT_STATES_HISTORIC MATLAB code for plot_states_historic.fig
-%      PLOT_STATES_HISTORIC, by itself, creates a new PLOT_STATES_HISTORIC or raises the existing
+function varargout = Plot_density_historic(varargin)
+% PLOT_DENSITY_HISTORIC MATLAB code for Plot_density_historic.fig
+%      PLOT_DENSITY_HISTORIC, by itself, creates a new PLOT_DENSITY_HISTORIC or raises the existing
 %      singleton*.
 %
-%      H = PLOT_STATES_HISTORIC returns the handle to a new PLOT_STATES_HISTORIC or the handle to
+%      H = PLOT_DENSITY_HISTORIC returns the handle to a new PLOT_DENSITY_HISTORIC or the handle to
 %      the existing singleton*.
 %
-%      PLOT_STATES_HISTORIC('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in PLOT_STATES_HISTORIC.M with the given input arguments.
+%      PLOT_DENSITY_HISTORIC('CALLBACK',hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in PLOT_DENSITY_HISTORIC.M with the given input arguments.
 %
-%      PLOT_STATES_HISTORIC('Property','Value',...) creates a new PLOT_STATES_HISTORIC or raises the
+%      PLOT_DENSITY_HISTORIC('Property','Value',...) creates a new PLOT_DENSITY_HISTORIC or raises the
 %      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before plot_states_historic_OpeningFcn gets called.  An
+%      applied to the GUI before Plot_density_historic_OpeningFcn gets called.  An
 %      unrecognized property name or invalid value makes property application
-%      stop.  All inputs are passed to plot_states_historic_OpeningFcn via varargin.
+%      stop.  All inputs are passed to Plot_density_historic_OpeningFcn via varargin.
 %
 %      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
 %      instance to run (singleton)".
 %
 % See also: GUIDE, GUIDATA, GUIHANDLES
 
-% Edit the above text to modify the response to help plot_states_historic
+% Edit the above text to modify the response to help Plot_density_historic
 
-% Last Modified by GUIDE v2.5 21-Aug-2017 16:29:25
+% Last Modified by GUIDE v2.5 21-Aug-2017 17:02:25
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
                    'gui_Singleton',  gui_Singleton, ...
-                   'gui_OpeningFcn', @plot_states_historic_OpeningFcn, ...
-                   'gui_OutputFcn',  @plot_states_historic_OutputFcn, ...
+                   'gui_OpeningFcn', @Plot_density_historic_OpeningFcn, ...
+                   'gui_OutputFcn',  @Plot_density_historic_OutputFcn, ...
                    'gui_LayoutFcn',  [] , ...
                    'gui_Callback',   []);
 if nargin && ischar(varargin{1})
@@ -45,28 +44,29 @@ end
 % End initialization code - DO NOT EDIT
 
 
-% --- Executes just before plot_states_historic is made visible.
-function plot_states_historic_OpeningFcn(hObject, eventdata, handles, varargin)
-
+% --- Executes just before Plot_density_historic is made visible.
+function Plot_density_historic_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-% varargin   command line arguments to plot_states_historic (see VARARGIN)
+% varargin   command line arguments to Plot_density_historic (see VARARGIN)
 
-% Choose default command line output for plot_states_historic
+% Choose default command line output for Plot_density_historic
 handles.output = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
-
-% UIWAIT makes plot_states_historic wait for user response (see UIRESUME)
+global indexes_used
+global wbd_data_historic
+% UIWAIT makes Plot_density_historic wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
-
-
+if ~isempty(indexes_used)
+    plot_standard_lorenz_density_gui(indexes_used,wbd_data_historic);
+end
 
 % --- Outputs from this function are returned to the command line.
-function varargout = plot_states_historic_OutputFcn(hObject, eventdata, handles) 
+function varargout = Plot_density_historic_OutputFcn(hObject, eventdata, handles) 
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -82,6 +82,8 @@ function listbox1_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+% Hints: contents = cellstr(get(hObject,'String')) returns listbox1 contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from listbox1
 global wbd_data_historic
 global chosen_country
 global year_historic
@@ -99,15 +101,15 @@ set(handles.listbox2,'String',cell(year_historic_cell));
 set(handles.listbox2,'Value',1);
 
 
-% Hints: contents = cellstr(get(hObject,'String')) returns listbox1 contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from listbox1
-
-
 % --- Executes during object creation, after setting all properties.
 function listbox1_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to listbox1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
+
+% Hint: listbox controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+
 global wbd_data_historic
 wbd_data_historic = generate_all_countries_historic();
 % Fill listbox with names of wbd_data_historic:
@@ -121,9 +123,6 @@ listbox_names = unique(listbox_names,'stable');
 
 set(hObject,'String',listbox_names);
 
-
-% Hint: listbox controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
@@ -144,7 +143,6 @@ function listbox2_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to listbox2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
-
 
 % Hint: listbox controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
@@ -168,13 +166,12 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Access global variables:
-
 global year_historic
 global indexes_used
 global wbd_data_historic
 
 axes(handles.axes1);
+x_values = linspace(0,1,1000);
 name = get(handles.listbox1,'String');
 name = name{get(handles.listbox1,'Value')};
 year = get(handles.listbox2,'String');
@@ -186,34 +183,65 @@ index = find_index_year(wbd_data_historic,string(name),year);
 
 % Indexes of wbd_data_historic used:
 indexes_used(end+1) = index;
+
+% Find unique values of indexes_used, such that every object is just
+% plotted once: 
+
 indexes_used = unique(indexes_used,'stable');
 
-plot_standard_lorenz_gui(indexes_used,wbd_data_historic,get(handles.checkbox1,'Value'))
+% Plot standard lorenz density according to following function: 
 
-set(handles.listbox2,'Value',1);
-% Is needed, as change of country could lead to a value of listbox2, which
-% does not exist, as there are not this many datasets for this country.
-% Application breaks down in these cases. 
-% Value = 1 ensures every country has this value for listbox2.
+plot_standard_lorenz_density_gui(indexes_used,wbd_data_historic);
 
 % --- Executes on button press in pushbutton2.
 function pushbutton2_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
 global indexes_used
 indexes_used = [];
-
-% Clear arrays, which indicate which countries were plotted.
-
 cla(handles.axes1);
-% Clear canvas, but keep options.
-guidata(hObject,handles);
-% Update GUI
 
 
-% --- Executes when user attempts to close figure1.
+% --------------------------------------------------------------------
+function export_plot_Callback(hObject, eventdata, handles)
+% hObject    handle to export_plot (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global indexes_used
+global wbd_data_historic
+
+figure;
+x_values = 0:0.001:1;
+a = 0.6;
+
+
+
+for i = 1 : length(indexes_used)
+    
+    legend_entries(i) = join([wbd_data_historic(indexes_used(i)).country," ",wbd_data_historic(indexes_used(i)).year_of_data]);
+    % Legend entries of Lorenz Curves
+    plot(x_values,mixed_lorenz_density(x_values,wbd_data_historic(indexes_used(i)).epsilon,a))
+    hold on
+    
+end
+
+legend(legend_entries,'Location','Northwest')
+legend('show')   
+title('Standard Lorenzdichte')
+xlabel('Bevölkerungsanteil x')
+ylabel('Vielfaches des Durchschnittseinkommens')
+grid on
+% Set y- Limit, such that 99 % of all x-values can be seen:
+y_limit = zeros(1,length(indexes_used));
+for i = 1 : length(indexes_used)
+    y_limit(i) = mixed_lorenz_density(0.99,wbd_data_historic(indexes_used(i)).epsilon,a);
+end
+    
+ylim([0 max(y_limit)]) 
+% set(Fig2,'visible','off')
+hold off;
+
 function figure1_CloseRequestFcn(hObject, eventdata, handles)
 % hObject    handle to figure1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -226,73 +254,10 @@ indexes_used = [];
 delete(hObject);
 
 
-% Menu callbacks: 
-
-% --------------------------------------------------------------------
-function export_plot_Callback(hObject, eventdata, handles)
-% hObject    handle to export_plot (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-global indexes_used
-global wbd_data_historic
-
-figure;
-% copyobj(AxesH, Fig2);
-x_values = 0:0.001:1;
-% Fig2.Resize = 'on';
-datapoints = [];
-if get(handles.checkbox1,'Value')
-    legend_entries = strings(1, 2 * length(indexes_used));
-    %legend_entries = string(2 * length(indexes_used),1);
-for i = 1 : length(indexes_used)
-    epsilon = wbd_data_historic(indexes_used(i)).epsilon;
-    plot(x_values,mixed_lorenz(x_values,epsilon,0.6));
-    hold on
-    plot(wbd_data_historic(indexes_used(i)).share_pop,wbd_data_historic(indexes_used(i)).cumulated_dist_vector,'+');
-    legend(join([wbd_data_historic(indexes_used(i)).country, " Datapoints"]));
-    hold on
-end
-for i = 1 : length(indexes_used)
-    
-    legend_entries(2*i-1) = join([wbd_data_historic(indexes_used(i)).country," ",wbd_data_historic(indexes_used(i)).year_of_data]);
-    % Legend entries of Lorenz Curves
-    
-    legend_entries(2*i) = join(["Daten ",wbd_data_historic(indexes_used(i)).country," ",wbd_data_historic(indexes_used(i)).year_of_data]);
-    % Legend entries of datapoints
-end
-
-else 
-    legend_entries = strings(1, length(indexes_used));
-    %legend_entries = string(length(indexes_used),1);
-    for i = 1 : length(indexes_used)
-    epsilon = wbd_data_historic(indexes_used(i)).epsilon;
-    plot(x_values,mixed_lorenz(x_values,epsilon,0.6));
-    hold on
-    end
-    for i = 1 : length(indexes_used)
-    
-    legend_entries(i) = join([wbd_data_historic(indexes_used(i)).country," ",wbd_data_historic(indexes_used(i)).year_of_data]);
-    % Legend entries of Lorenz Curves
-    
-
-    end
-end
-legend(legend_entries,'Location','Northwest')
-legend('show')   
-title('Standard Lorenzkurve')
-xlabel('Bevölkerungsanteil x')
-ylabel('Einkommensanteil')
-grid on
-hold off;
-
-
 % --------------------------------------------------------------------
 function Untitled_1_Callback(hObject, eventdata, handles)
 % hObject    handle to Untitled_1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-
+plot_states_historic;
 delete(handles.figure1);
-Plot_density_historic;
