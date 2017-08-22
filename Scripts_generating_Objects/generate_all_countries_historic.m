@@ -35,3 +35,7 @@ for i = 1 : size_T(1)
        
 end 
 
+% Stop Excel process, which sometimes stay open despite ended program: 
+
+system('taskkill /F /IM EXCEL.EXE');
+

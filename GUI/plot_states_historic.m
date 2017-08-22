@@ -23,7 +23,7 @@ function varargout = plot_states_historic(varargin)
 
 % Edit the above text to modify the response to help plot_states_historic
 
-% Last Modified by GUIDE v2.5 21-Aug-2017 16:29:25
+% Last Modified by GUIDE v2.5 22-Aug-2017 11:00:55
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -42,6 +42,7 @@ if nargout
 else
     gui_mainfcn(gui_State, varargin{:});
 end
+
 % End initialization code - DO NOT EDIT
 
 
@@ -62,7 +63,6 @@ guidata(hObject, handles);
 
 % UIWAIT makes plot_states_historic wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
-
 
 
 % --- Outputs from this function are returned to the command line.
@@ -109,7 +109,13 @@ function listbox1_CreateFcn(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 global wbd_data_historic
-wbd_data_historic = generate_all_countries_historic();
+
+if isempty(wbd_data_historic)
+    
+    wbd_data_historic = generate_all_countries_historic();
+end
+length(wbd_data_historic)
+
 % Fill listbox with names of wbd_data_historic:
 
 listbox_names = cell(1,length(wbd_data_historic));
@@ -173,7 +179,7 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 global year_historic
 global indexes_used
 global wbd_data_historic
-
+guidata(hObject,handles);
 axes(handles.axes1);
 name = get(handles.listbox1,'String');
 name = name{get(handles.listbox1,'Value')};
@@ -186,7 +192,7 @@ index = find_index_year(wbd_data_historic,string(name),year);
 
 % Indexes of wbd_data_historic used:
 indexes_used(end+1) = index;
-indexes_used = unique(indexes_used,'stable');
+indexes_used = unique(indexes_used,'stable')
 
 plot_standard_lorenz_gui(indexes_used,wbd_data_historic,get(handles.checkbox1,'Value'))
 
@@ -238,13 +244,12 @@ global indexes_used
 global wbd_data_historic
 
 figure;
-% copyobj(AxesH, Fig2);
+
 x_values = 0:0.001:1;
-% Fig2.Resize = 'on';
-datapoints = [];
+
 if get(handles.checkbox1,'Value')
     legend_entries = strings(1, 2 * length(indexes_used));
-    %legend_entries = string(2 * length(indexes_used),1);
+
 for i = 1 : length(indexes_used)
     epsilon = wbd_data_historic(indexes_used(i)).epsilon;
     plot(x_values,mixed_lorenz(x_values,epsilon,0.6));
@@ -264,7 +269,6 @@ end
 
 else 
     legend_entries = strings(1, length(indexes_used));
-    %legend_entries = string(length(indexes_used),1);
     for i = 1 : length(indexes_used)
     epsilon = wbd_data_historic(indexes_used(i)).epsilon;
     plot(x_values,mixed_lorenz(x_values,epsilon,0.6));
@@ -296,3 +300,21 @@ function Untitled_1_Callback(hObject, eventdata, handles)
 
 delete(handles.figure1);
 Plot_density_historic;
+
+
+% --------------------------------------------------------------------
+function Untitled_2_Callback(hObject, eventdata, handles)
+% hObject    handle to Untitled_2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global submitted_data
+global wbd_data_historic
+
+enter_own_data;
+
+uiwait
+delete(handles.figure1);
+% plot(submitted_data.share_pop,submitted_data.cumulated_dist_vector,'+')
+plot_states_historic;
+
+

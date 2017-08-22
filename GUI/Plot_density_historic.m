@@ -57,13 +57,10 @@ handles.output = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
-global indexes_used
-global wbd_data_historic
+
 % UIWAIT makes Plot_density_historic wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
-if ~isempty(indexes_used)
-    plot_standard_lorenz_density_gui(indexes_used,wbd_data_historic);
-end
+
 
 % --- Outputs from this function are returned to the command line.
 function varargout = Plot_density_historic_OutputFcn(hObject, eventdata, handles) 
@@ -111,7 +108,11 @@ function listbox1_CreateFcn(hObject, eventdata, handles)
 %       See ISPC and COMPUTER.
 
 global wbd_data_historic
-wbd_data_historic = generate_all_countries_historic();
+if isempty(wbd_data_historic)
+    
+    wbd_data_historic = generate_all_countries_historic();
+end
+
 % Fill listbox with names of wbd_data_historic:
 
 listbox_names = cell(1,length(wbd_data_historic));
@@ -259,5 +260,6 @@ function Untitled_1_Callback(hObject, eventdata, handles)
 % hObject    handle to Untitled_1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-plot_states_historic;
+
 delete(handles.figure1);
+plot_states_historic;
