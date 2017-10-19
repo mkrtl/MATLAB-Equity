@@ -1,0 +1,12 @@
+% Plot Welt 2002
+    
+    plot(mixed_lorenz_Welt_2002_kaempke_neu.share_pop,Welt_2002_kaempke_neu.cumulated_dist_vector,'.',World.share_pop,...
+        World.cumulated_dist_vector,'.')
+    
+    xlabel("Cumulative Population Share") ;
+    ylabel("Cumulative Income Share");
+    legend('Income Data World Bank 2002','Mixed Lorenz Curve',);
+    legend('show');
+    
+    grid on 
+    print('Welt_2002.png', '-dpng', '-r300');

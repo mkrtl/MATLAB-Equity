@@ -1,11 +1,14 @@
-A = readtable('Kämpke_2002_EU.xlsx');
-Einkommen = A.Einkommen;
-Bev = A.Bev_lkerung;
-x = 0:0.001:1;
-plot(Bev,Einkommen,'.',x,mixed_lorenz(x,(1-0.32)/(1+0.32),0.6),EU_today_common.share_pop,EU_today_common.cumulated_dist_vector,'.',x,mixed_lorenz(x,EU_today_common.epsilon_model,0.6))
-xlabel('Bevölkerungsanteil')
-ylabel('Einkommensanteil')
-legend('Daten Weltbank 2002','Standard Lorenzkurve 2002','Daten Weltbank 2016', 'Standard Lorenzkurve 2016','Location','northwest')
+% A = readtable('Kämpke_2002_EU.xlsx');
+% Einkommen = A.Einkommen;
+% Einkommen = Einkommen(Einkommen ~=0);
+% Bev = A.Bev_lkerung;
+% Bev = Bev(Bev ~=0);
+ x = 0:0.001:1;
+% EU2002_kaempke = Equity("EU_2002_kaempke",Einkommen,Bev);
+plot(EU2002_common.share_pop,EU2002_common.cumulated_dist_vector,'.',x,mixed_lorenz(x,EU2002_common.epsilon_model,0.6),EU_today_common.share_pop,EU_today_common.cumulated_dist_vector,'.',x,mixed_lorenz(x,EU_today_common.epsilon_model,0.6))
+xlabel('Cumulative Population Share')
+ylabel('Cumulutative Income Share')
+legend('Income Data Worldbank 2002','Mixed Lorenz Curve 2002','Income Data Worldbank 2016', 'Mixed Lorenz Curve 2016','Location','northwest')
 str = 'EU 2002';
 dim_1 = [.15 .62 0 0];
 box_1 = annotation('textbox',dim_1,'String',str, 'FitBoxToText','on', 'Interpreter','none','FontName','Helvetica');
@@ -30,4 +33,4 @@ box_4 = annotation('textbox',dim_4,'String',epsilon_str, 'FitBoxToText','on');
 box_4.FontSize = 12;
 box_4.LineStyle = 'None';
 grid on
-print('EU_Standard_Lorenz_Vergleich.png', '-dpng', '-r300');
+print('Figure_6', '-depsc', '-r900');

@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"plotdemo","l":"PlotdemoMCRFactory"},{"p":"plotdemo","l":"plotter"},{"p":"plotdemo","l":"plotterRemote"}]

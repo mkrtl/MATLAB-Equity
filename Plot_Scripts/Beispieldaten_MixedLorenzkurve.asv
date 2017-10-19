@@ -1,0 +1,59 @@
+% Script to produce made up example plots for Paper by Herlyn and
+% Radermacher
+a = 0.6;
+
+x_example = [0; 0.5; 1];
+y_example = [0; 0.1; 1];
+x = 0:0.001:1;
+diagonal = x;
+
+f1=figure
+%hold on
+%plot(x,diagonal,'-','DisplayName','Diagonale',x_example,y_example,'-','DisplayName','Beispieldaten');
+plot(x,diagonal,'-k','DisplayName','Diagonale');
+hold on 
+plot(x_example,y_example,'-','DisplayName','Example Data');
+%plot(x_example,y_example,'-','DisplayName','Beispieldaten');
+hold on 
+
+Gini = 1-(2*(0.5*(0.5*0.1)+0.5*0.1+0.5*(0.9*0.5)));
+eps = (1-Gini)/(1+Gini); 
+plot(x,mixed_lorenz(x,eps,a),'--','DisplayName','Standard-Lorenzkurve');
+%fill([x,y_example],[x,mixed_lorenz(x,eps,a)],'b')
+
+text(0.032,0.75,'G = 40')
+xlabel("Bevölkerungsanteil x");
+ylabel("Einkommensanteil");
+grid on 
+legend('show','location','northwest')
+
+saveas(f1,sprintf('Beispieldaten_MixedLorenzkurve.png'));
+saveas(f1,sprintf('Beispieldaten_MixedLorenzkurve.pdf'));
+
+%%%% Density plot %%%%%
+
+xd1 = [0; 0.5];
+yd1 = [0.2; 0.2];
+xd2 = [0.5; 1];
+yd2 = [1.8; 1.8];
+f2 = figure
+p1 = plot(xd1,yd1,'o-k');
+hold on 
+p2 = plot(xd2,yd2,'o-k');
+hold on
+p3 = plot(x,mixed_lorenz_density(x,eps,a),'--');
+xlim([0 1]);
+ylim([0 2.5]);
+
+text(0.032,1.9,'G = 40')
+xlabel("Bevölkerungsanteil x");
+ylabel("Anteil am Durchschnittseinkommen");
+set(gca, 'YTick', sort([0.2, get(gca, 'YTick')]));
+set(gca, 'YTick', sort([1.8, get(gca, 'YTick')]));
+grid on 
+legend([p2 p3],{'Beispieldaten','Standard-Lorenzdichte'},'location','northwest');
+%legend('show','location','northwest');
+
+saveas(f2,sprintf('Beispieldaten_MixedLorenzdichte.png')    );
+saveas(f2,sprintf('Beispieldaten_MixedLorenzdichte.pdf'));
+

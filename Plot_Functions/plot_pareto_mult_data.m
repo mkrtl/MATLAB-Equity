@@ -13,11 +13,10 @@ for i=1:n_states
     y=plot(varargin{i}.share_pop, varargin{i}.cumulated_dist_vector,'+', 0:0.001:1,f(0:0.001:1));
     hold on
 end 
-legend('Daten Weltbank','Pareto Lorenzkurve','Location','northwest');
-title('Pareto Lorenzkurve (USA)')
-xlabel('Bevölkerungsanteil')
-ylabel('Einkommensanteil')
-
+legend('Income Data World Bank','Pareto Lorenz Curve','Location','northwest');
+xlabel('Cumulated Population Share')
+ylabel('Cumulated Income Share')
+% Achtung: Hier Namen des Landes anstatt 'USA' einsetzen !!!!
 str = join(['USA ',string(varargin{1}.year_of_data)]);
 dim_1 = [.15 .53 0 0];
 box_1 = annotation('textbox',dim_1,'String',str, 'FitBoxToText','on', 'Interpreter','none','FontName','Helvetica');
@@ -36,5 +35,5 @@ hold off
 
 
 
-print(join([varargin{i}.country,'_Pareto','.png']), '-dpng', '-r300');
+print(join([varargin{i}.country,'_Pareto']), '-depsc', '-r900');
 
