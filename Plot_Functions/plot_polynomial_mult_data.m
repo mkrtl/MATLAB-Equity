@@ -13,15 +13,20 @@ for i=1:n_states
     legend('show','Location','northwest')
     hold on
 end 
-legend('Income Data World Bank','Pareto Lorenz Curve','Location','northwest');
+legend('Income Data World Bank','Pareto Polynomial Curve','Location','northwest');
 xlabel('Cumulative Population Share')
 ylabel('Cumulative Income Share')
-% Achtung: Hier Namen des Landes anstatt 'USA' einsetzen !!!!
-str = join(['USA ',string(varargin{1}.year_of_data)]);
+str = join([varargin{1}.country,string(varargin{1}.year_of_data)]);
 dim_1 = [.15 .53 0 0];
 box_1 = annotation('textbox',dim_1,'String',str, 'FitBoxToText','on', 'Interpreter','none','FontName','Helvetica');
 box_1.FontSize = 12;
 box_1.LineStyle = 'None';
+
+str = join(["G = ",string(round(varargin{1}.gini_data,2))]);
+dim_2 = [.15 .49 0 0];
+box_2 = annotation('textbox',dim_2,'String',str, 'FitBoxToText','on', 'Interpreter','none','FontName','Helvetica');
+box_2.FontSize = 12;
+box_2.LineStyle = 'None';
 grid on
 
 hold off
