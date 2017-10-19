@@ -14,8 +14,8 @@ for i=1:n_states
     hold on
 end 
 legend('Income Data World Bank','Pareto Lorenz Curve','Location','northwest');
-xlabel('Cumulated Population Share')
-ylabel('Cumulated Income Share')
+xlabel('Cumulative Population Share')
+ylabel('Cumulative Income Share')
 % Achtung: Hier Namen des Landes anstatt 'USA' einsetzen !!!!
 str = join(['USA ',string(varargin{1}.year_of_data)]);
 dim_1 = [.15 .53 0 0];

@@ -5,19 +5,20 @@ function y=plot_mixed_mult_data(a,varargin)
 % Function is able to plot multiple objects in the same plot. Function is
 % function for Equity objects.
 n_states=length(varargin);  
-    
+varargin{1}.share_pop
 for i=1:n_states
     eps=varargin{i}.epsilon;
     f=@(x) a* (1-(1-x).^eps) + (1-a) * x.^(1/eps);
+    varargin{i}.share_pop
     y=plot(varargin{i}.share_pop,varargin{i}.cumulated_dist_vector,'+','DisplayName',varargin{i}.country,...
         0:0.001:1,f(0:0.001:1));
     hold on
 end 
 legend('Income Data World Bank','Pareto Lorenz Curve','Location','northwest');
-xlabel('Cumulated Population Share')
-ylabel('Cumulated Income Share')
+xlabel('Cumulative Population Share')
+ylabel('Cumulative Income Share')
 % Achtung: Hier Namen des Landes anstatt 'USA' einsetzen !!!!
-str = join(['USA ',string(varargin{1}.year_of_data)]);
+str = join([varargin{1}.country,string(varargin{1}.year_of_data)]);
 dim_1 = [.15 .53 0 0];
 box_1 = annotation('textbox',dim_1,'String',str, 'FitBoxToText','on', 'Interpreter','none','FontName','Helvetica');
 box_1.FontSize = 12;
