@@ -3,7 +3,8 @@
 %% 
 
 %% Generate_all_countries_historic
-generate_all_countries;
+function y = generate_EU()
+wbd_data = generate_all_countries();
 
 %% Create the EU of 2002 with most recent datasets and calls the Equity object EU2002_today.
 EU_names = ["Slovenia","Croatia","Estonia","Latvia","Hungary","Czech Republic","Cyprus","Bulgaria","Belgium","Denmark","Germany","Finland","France","Greece","Ireland","Italy","Luxembourg","Netherlands","Austria","Portugal","Sweden","Spain","United Kingdom"];
@@ -12,7 +13,7 @@ for i = 1 : length(EU_names)
     EU_today(i) = wbd_data(index);
     
 end
-EU_today_common = common_distribution(EU_today, "EU_today");
+y = common_distribution(EU_today, "EU_today");
 
 
 
