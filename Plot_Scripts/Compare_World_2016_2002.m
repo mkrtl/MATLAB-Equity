@@ -32,7 +32,8 @@ box_4.FontSize = 12;
 box_4.LineStyle = 'None';
 xlabel("Cumulative Population Share") ;
 ylabel("Cumulative Income Share");
-legend('Income Data World Bank 2002','Mixed Lorenz Curve 2002','Income Data World Bank 2016','Mixed Lorenz Curve 2002','Location','Northwest');
+legend('Income Data World Bank 2016',...
+    'Mixed Lorenz Curve 2016','Income Data World Bank 2002','Mixed Lorenz Curve 2002','Location','Northwest');
 legend('show');
 xlim([0 1])
 ylim([0 1])
