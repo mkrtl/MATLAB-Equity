@@ -1,4 +1,4 @@
-% Plot Welt 2002
+%Compares World of 2016 and 2002
 generate_all_countries;
 World = common_distribution(wbd_data,"World");
 Welt_2002_kaempke_neu = Welt_2002();
@@ -38,4 +38,4 @@ legend('show');
 xlim([0 1])
 ylim([0 1])
 grid on
-print('Figure_7', '-depsc', '-r900');
+% print('Figure_7', '-depsc', '-r900');

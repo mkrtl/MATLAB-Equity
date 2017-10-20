@@ -5,7 +5,8 @@
 % !! Assumes the entries are ordered by the year of their creation, such that 
 % most recent entries are first !!
 %% genearate_all_countries_historic
-wbd_data_historic = generate_all_countries_historic;
+function y = generate_all_countries()
+wbd_data_historic = generate_all_countries_historic();
 %% Find most recent dataset for every country
 already_in_wbd_data = string();
 % Indicator, if we already have country in wbd_data
@@ -20,3 +21,5 @@ for i = 1 : length(wbd_data_historic)
         already_in_wbd_data = [already_in_wbd_data,string(wbd_data_historic(i).country)];
     end
 end
+y = wbd_data;
+
