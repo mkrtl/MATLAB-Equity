@@ -1,13 +1,13 @@
-% Plot EU of 2002 today and the EU of 2002 with World Bank Data
+% Plot EU of 2002 today and the EU of 2002 today with World Bank Data.
 % Stand: 29.01.2018
 
 %%
 EU_2002_kaempke;
-EU2002_today = generate_EU_today_members_2002();
+EU_today = generate_EU();
 x_grid = 0:0.001:1;
 a = 0.6;
-plot(    EU2002_today.share_pop,EU2002_today.cumulated_dist_vector,'.',...
-    x_grid,mixed_lorenz(x_grid,EU2002_today.epsilon_model,0.6),EU2002_kaempke.share_pop,EU2002_kaempke.cumulated_dist_vector,'.',...
+plot(    EU_today.share_pop,EU_today.cumulated_dist_vector,'.',...
+    x_grid,mixed_lorenz(x_grid,EU_today.epsilon_model,0.6),EU2002_kaempke.share_pop,EU2002_kaempke.cumulated_dist_vector,'.',...
     x_grid,mixed_lorenz(x_grid,EU2002_kaempke.epsilon_model,0.6))
 
 
@@ -32,17 +32,17 @@ box_2 = annotation('textbox',dim_2,'String',epsilon_str, 'FitBoxToText','on');
 box_2.FontSize = 12;
 box_2.LineStyle = 'None';
 
-str = "EU 2002 Today";
+str = "EU Today";
 dim_3 = [.15 .53 0 0];
 box_3 = annotation('textbox',dim_3,'String',str, 'FitBoxToText','on', 'Interpreter','none','FontName','Helvetica');
 box_3.FontSize = 12;
 box_3.LineStyle = 'None';
 
-epsilon_str =  join(["G = ",num2str(round(EU2002_today.gini_model,2))]) ;
+epsilon_str =  join(["G = ",num2str(round(EU_today.gini_model,2))]) ;
 dim_4 = [0.15 0.49 0 0];
 box_4 = annotation('textbox',dim_4,'String',epsilon_str, 'FitBoxToText','on');
 box_4.FontSize = 12;
 box_4.LineStyle = 'None';
 %%
-%print('WBD_EU2002_vs_2002_today','-depsc','-r900')
+%print('WBD_EU2002_vs_EU_today','-depsc','-r900')
 

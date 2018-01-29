@@ -1,6 +1,6 @@
 function y = generate_EU2002_today_EUSILC(exclude_Den_Swe)
 % Fill in 1 to exclude Denmark and Sweden from cumulation.
-dta = readtable("EU2002_heute_EUSILC.xls")
+dta = readtable("EU2002_heute_EUSILC.xls");
 
 pop_vector = 0:0.1:1;
 for i = 1 : size(dta,1)

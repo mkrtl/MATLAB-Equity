@@ -1,5 +1,7 @@
-function y = generate_EU_today_EUSILC()
-dta = readtable("EUSILC_EU_Today.xls");
+function y = generate_EU_2001_today_EUSILC()
+% As there is no data for Denmark and Sweden in 2001 it is excluded here as
+% well.
+dta = readtable("EU_2001_today_EUSILC.xlsx");
 
 pop_vector = 0:0.1:1;
 for i = 1 : size(dta,1)
@@ -7,7 +9,7 @@ for i = 1 : size(dta,1)
         dta.F_nftesDezil(i),dta.SechstesDezil(i),dta.SiebtesDezil(i),dta.AchtesDezil(i),dta.NeuntesDezil(i),dta.ZehntesDezil(i)];
     bip = 10^7 * dta.BIPInMioEuro(i);
     pop_size = dta.x2016(i);
-    EU_today(i) = State(dta.GEO_QUANTILE(i),income,0,pop_vector,2016,bip,pop_size)
+    EU_today(i) = State(dta.GEO_QUANTILE(i),income,0,pop_vector,2016,bip,pop_size);
     
 end
 

@@ -22,9 +22,6 @@ for i = 1 : length(EU_2002_names)
     end    
 end
 y = common_distribution(EU2002,"EU2002");
-%% Plots the distribution
-%plot(0:0.01:1,mixed_lorenz(0:0.01:1,find_epsilon_simple(EU2002_common,1000,0.6),0.6),EU2002_common.share_pop,EU2002_common.cumulated_dist_vector,'.')
-
         
         
      

@@ -1,26 +1,23 @@
-% Plot EU of today and the EU of 2001 with EU-SILC data.
+% Plot EU of today and the EU of 2001 today with EU-SILC data.
 % Stand: 29.01.2018
 
 %%
 EU_2001 = generate_EU2001_EUSILC;
-EU_today = generate_EU_today_EUSILC;
+EU_2001_today = generate_EU_2001_today_EUSILC;
 x_grid = 0:0.001:1;
 a = 0.6;
-
-EU_2001_epsilon = find_epsilon_simple(EU_2001,1000,0.6);
-EU_today_epsilon = find_epsilon_simple(EU_today,1000,0.6);
+EU_2001_today_epsilon = find_epsilon_simple(EU_2001,1000,0.6);
+EU_today_epsilon = find_epsilon_simple(EU_2001_today,1000,0.6);
 
 % Fitting with fitting function is not possible for EU_today. Therefore,
 % the simpler but more robust version find_epsilon_simple is used.
 
 EU_today_gini = (1-EU_today_epsilon)/(1+EU_today_epsilon);
-EU_2001_gini = (1-EU_2001_epsilon)/(1+EU_2001_epsilon);
-
-
-plot(    EU_today.share_pop,EU_today.cumulated_dist_vector,'.',...
+EU_2001_gini = (1-EU_2001_today_epsilon)/(1+EU_2001_today_epsilon);
+% Calculate Gini by known formula.
+plot(    EU_2001_today.share_pop,EU_2001_today.cumulated_dist_vector,'.',...
     x_grid,mixed_lorenz(x_grid,EU_today_epsilon,0.6),EU_2001.share_pop,EU_2001.cumulated_dist_vector,'.',...
-    x_grid,mixed_lorenz(x_grid,EU_2001_epsilon,0.6))
-
+    x_grid,mixed_lorenz(x_grid,EU_2001_today_epsilon,0.6))
 
 
 
@@ -43,7 +40,7 @@ box_2 = annotation('textbox',dim_2,'String',epsilon_str, 'FitBoxToText','on');
 box_2.FontSize = 12;
 box_2.LineStyle = 'None';
 
-str = "EU Today";
+str = "EU 2001 Today";
 dim_3 = [.15 .53 0 0];
 box_3 = annotation('textbox',dim_3,'String',str, 'FitBoxToText','on', 'Interpreter','none','FontName','Helvetica');
 box_3.FontSize = 12;
@@ -57,5 +54,5 @@ box_4.LineStyle = 'None';
 
 xlim([0 1])
 %%
-%print('EU2001_and_today','-depsc','-r900')
+print('EU2001_and_EU2001_today','-depsc','-r900')
 

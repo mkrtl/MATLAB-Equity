@@ -1,4 +1,4 @@
-% Plot EU of today and the EU of 2001 with EU-SILC data.
+% Plot EU of today and the EU of 2001 with EU-SILC-data.
 % Stand: 29.01.2018
 
 %%
@@ -57,5 +57,5 @@ box_4.LineStyle = 'None';
 
 xlim([0 1])
 %%
-%print('EU2001_and_today','-depsc','-r900')
+print('EU2001_and_today','-depsc','-r900')
 
