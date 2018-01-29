@@ -8,4 +8,6 @@ opts = optimset('Display','off');
 
 [eps,error] = lsqcurvefit( f, 0.5 , pop, cum_dist, 0, 1, opts);
 
-y = real([eps,error]);
+RMSE = sqrt(error);
+
+y = real([eps,RMSE]);

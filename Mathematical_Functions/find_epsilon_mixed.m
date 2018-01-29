@@ -1,5 +1,5 @@
 
-%%% Mixed Lorenz Curves Fitting Function, with a fixed %%%
+%%% Mixed Lorenz Curves Fitting Function, with a fixed a%%%
 %Directly derived from problem "finding best a"
 
 function y = find_epsilon_mixed(Equity)

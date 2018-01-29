@@ -1,6 +1,6 @@
 function y = common_distribution(vector, name)
 
-% This function takes a vector of Equity objects, calculates the joint 
+% This function takes a vector of State objects, calculates the joint 
 % income distribution of these objects and finally generates an Equity
 % object with the caclulated values. The second argument determines the
 % value of Equity.name for this object and is supposed to be a string.

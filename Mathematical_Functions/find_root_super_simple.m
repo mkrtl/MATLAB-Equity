@@ -1,5 +1,5 @@
 function y = find_root_super_simple(g,a,b,n,tolerance)
-% Is a simple but stable algorithm for finding roots. Simply generates a
+% Simple but stable algorithm for finding roots. Simply generates a
 % grid given by a,b and n and tries for every element of the grid, whether
 % the absolut value of the function at that point is lower than the
 % tolerance. 

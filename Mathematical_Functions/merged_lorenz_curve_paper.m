@@ -19,11 +19,11 @@ result = zeros(1,length(x_grid));
 % Now calculate x_l
 if (1-b)/(1-m)* epsilon_2 *a <= b/m * epsilon_1 * a
     g = @(x) (1-b)/(1-m) *((1-a)*(1/epsilon_2)*x.^((1/epsilon_2)-1)+a*epsilon_2*(1-x).^(epsilon_2-1)) - a*(b/m)*epsilon_1;
-    x_l = m * fzero(g,[0 0.999])
+    x_l = m * fzero(g,[0 0.999]);
     lower_index = 2;
 elseif (1-b)/(1-m)* epsilon_2 *a >  b/m * epsilon_1 * a
     g = @(x) b/m *((1-a)*(1/epsilon_1)*x.^((1/epsilon_1)-1)+a*epsilon_1*(1-x).^(epsilon_1-1))- a*(1-b)/(1-m)*epsilon_2;
-    x_l = m * fzero(g,[0 0.999])
+    x_l = m * fzero(g,[0 0.999]);
     lower_index = 1;
 end
 
@@ -45,34 +45,24 @@ elseif lower_index == 2
 end
 
 % Now make deconvolution
-f_1 = @(x_1,b,m,a,epsilon_1,epsilon_2) (b/m)*((1-a)*(1/epsilon_1)*(x_1/m).^((1/epsilon_1)-1)+a*epsilon_1*(1-(x_1/m)).^(epsilon_1-1));
-f_2 = @(x_1,b,m,a,epsilon_1,epsilon_2,x) (1-b)/(1-m)*((1-a)*(1/epsilon_2)*((x-x_1)/(1-m)).^((1/epsilon_2)-1)+a*epsilon_2*(1-(x-x_1)/(1-m)).^(epsilon_2-1));
+f_1 = @(x_1,b,m,a,epsilon_1) ...
+    (b/m)*((1-a)*(1/epsilon_1)*(x_1/m).^((1/epsilon_1)-1)+a*epsilon_1*(1-(x_1/m)).^(epsilon_1-1));
+f_2 = @(x_1,b,m,a,epsilon_2,x) ...
+    ((1-b)/(1-m))*((1-a)*(1/epsilon_2)*((x-x_1)/(1-m)).^((1/epsilon_2)-1)+a*epsilon_2*(1-((x-x_1)/(1-m))).^(epsilon_2-1));
 
 for k = i : length(x_grid)-1
-    %x_min = max(0,m+x_grid(i) -1)
-    %x_max = min(x_grid(i),m)
-    f_3 = @(x_1) f_1(x_1,b,m,a,epsilon_1,epsilon_2)-f_2(x_1,b,m,a,epsilon_1,epsilon_2,x_grid(k));
-
+    x_min = real(max(0,m+x_grid(i) -1))
+    x_max = real(min(x_grid(i),m))
+   
+    f_3 = @(x_1) f_1(x_1,b,m,a,epsilon_1)-f_2(x_1,b,m,a,epsilon_2,x_grid(k));
+    f_3(x_min)
+    f_3(x_max)
+    plot(0:0.01:1,f_3(0:0.01:1))
     % f = mixed_lorenz_density_function(epsilon_1,epsilon_2,a,x_grid(i),m,b);
-    for j = 1 : length(x_grid)
-        if f_3(x_grid(j)) < 0 
-            x_min = x_grid(j)
-        end
-    end
-    
-    for j = length(x_grid):1
-        if f_3(x_grid(j)) > 0 
-            x_max = x_grid(j)
-        end
-    end
-    
-        f_3(x_min)
-        f_3(x_max)
-
-        x_1 = fzero(f_3,[x_min x_max]);
+    x_1 = fzero(f_3,[x_min x_max])
     
     result(k) = b * mixed_lorenz(x_1/m,epsilon_1,a) + (1-b) * mixed_lorenz((x_grid(k)-x_1)/(1-m),epsilon_2,a);
-    % Main issue: find limits, s.t. f of limits differs in sign.
+    % Main issue: find limits, s.t. f(x_min) f(x_max) differs in sign.
 end
 result(length(result))=1;
 % Nasty solution: F(1) can not be solved by the convolution rules
