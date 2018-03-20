@@ -111,10 +111,9 @@ function listbox1_CreateFcn(hObject, eventdata, handles)
 global wbd_data_historic
 
 % Generate vector of States, if not already existing: 
-
 if isempty(wbd_data_historic)
     
-    wbd_data_historic = generate_all_countries_historic();
+    wbd_data_historic = generate_all_countries_historic_gui();
 end
 
 % Fill listbox with names of wbd_data_historic:
@@ -184,8 +183,6 @@ guidata(hObject,handles);
 axes(handles.axes1);
 name = get(handles.listbox1,'String');
 name = name{get(handles.listbox1,'Value')};
-year = get(handles.listbox2,'String');
-%year = year{get(handles.listbox2,'Value')};
 year = year_historic(get(handles.listbox2,'Value'));
 
 

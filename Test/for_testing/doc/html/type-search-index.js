@@ -1,1 +1,0 @@
-typeSearchIndex = [{"p":"Test","l":"Class1"},{"p":"Test","l":"Class1Remote"},{"p":"Test","l":"TestMCRFactory"}]

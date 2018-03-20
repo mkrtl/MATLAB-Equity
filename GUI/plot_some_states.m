@@ -64,7 +64,7 @@ guidata(hObject, handles);
 % anymore:
 
 global wbd_data
-generate_all_countries;
+wbd_data = generate_all_countries();
 
 % UIWAIT makes plot_some_states wait for user response (see UIRESUME)
 % uiwait(handles.figure1);

@@ -1,1 +1,0 @@
-typeSearchIndex = [{"p":"Plot_java_example","l":"Plot_java_exampleMCRFactory"},{"p":"Plot_java_example","l":"Plot_java_test"},{"p":"Plot_java_example","l":"Plot_java_testRemote"}]

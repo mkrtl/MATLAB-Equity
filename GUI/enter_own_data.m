@@ -25,7 +25,7 @@ function varargout = enter_own_data(varargin)
 
 % Edit the above text to modify the response to help enter_own_data
 
-% Last Modified by GUIDE v2.5 22-Aug-2017 15:11:19
+% Last Modified by GUIDE v2.5 20-Mar-2018 10:57:23
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -86,9 +86,11 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 global wbd_data_historic
 entered_matrix = (get(handles.uitable1,'data'));
 ordered_matrix = order_income(entered_matrix(:,1),entered_matrix(:,2));
-temporary_equity = Equity("Fantasia",ordered_matrix(:,2),ordered_matrix(:,1));
-submitted_data = State('Fantasia',ordered_matrix(:,2),(1-temporary_equity.epsilon_model)/(1+temporary_equity.epsilon_model),ordered_matrix(:,1),2000,0,0);
-wbd_data_historic(end+1) = submitted_data
+country_name = get(handles.name_country,'String')
+temporary_equity = Equity(country_name,ordered_matrix(:,2),ordered_matrix(:,1));
+year_data = get(handles.year_data,'String');
+submitted_data = State(country_name,ordered_matrix(:,2),(1-temporary_equity.epsilon_model)/(1+temporary_equity.epsilon_model),ordered_matrix(:,1),year_data,0,0);
+wbd_data_historic(end+1) = submitted_data;
 delete(handles.figure1);
 
 
@@ -128,18 +130,18 @@ function uitable1_CreateFcn(hObject, eventdata, handles)
 
 
 
-function edit7_Callback(hObject, eventdata, handles)
-% hObject    handle to edit7 (see GCBO)
+function name_country_Callback(hObject, eventdata, handles)
+% hObject    handle to name_country (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of edit7 as text
-%        str2double(get(hObject,'String')) returns contents of edit7 as a double
+% Hints: get(hObject,'String') returns contents of name_country as text
+%        str2double(get(hObject,'String')) returns contents of name_country as a double
 
 
 % --- Executes during object creation, after setting all properties.
-function edit7_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit7 (see GCBO)
+function name_country_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to name_country (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -151,64 +153,18 @@ end
 
 
 
-function edit8_Callback(hObject, eventdata, handles)
-% hObject    handle to edit8 (see GCBO)
+function year_data_Callback(hObject, eventdata, handles)
+% hObject    handle to year_data (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of edit8 as text
-%        str2double(get(hObject,'String')) returns contents of edit8 as a double
+% Hints: get(hObject,'String') returns contents of year_data as text
+%        str2double(get(hObject,'String')) returns contents of year_data as a double
 
 
 % --- Executes during object creation, after setting all properties.
-function edit8_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit8 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-
-function edit9_Callback(hObject, eventdata, handles)
-% hObject    handle to edit9 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of edit9 as text
-%        str2double(get(hObject,'String')) returns contents of edit9 as a double
-
-
-% --- Executes during object creation, after setting all properties.
-function edit9_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit9 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-
-function edit10_Callback(hObject, eventdata, handles)
-% hObject    handle to edit10 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of edit10 as text
-%        str2double(get(hObject,'String')) returns contents of edit10 as a double
-
-
-% --- Executes during object creation, after setting all properties.
-function edit10_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit10 (see GCBO)
+function year_data_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to year_data (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
