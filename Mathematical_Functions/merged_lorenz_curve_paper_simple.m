@@ -1,4 +1,5 @@
 function y = merged_lorenz_curve_paper_simple(m,b,epsilon_1,epsilon_2,a) 
+%%%%%%%%%%%%%%%%%%%%%
 % Calculates a merged lorenz curve according to paper " A straightforward
 % calculus" by Professor Kämpke. Uses the simple algorithm
 % "find_root_super_simple" for calculating the values of the deconvolution
@@ -7,7 +8,7 @@ function y = merged_lorenz_curve_paper_simple(m,b,epsilon_1,epsilon_2,a)
 % CAUTION: Curve is not really normalized, i.e. F(1-delta) < 1 for all delta > 0 usually.
 % There is a nasty solution implemented by setting F(1) =1 
 % F(1) can not be calculated by the strucure of the convolution.
-
+%%%%%%%%%%%%%%%%%%%%%
 
 % Initialize grid and result array
 
@@ -51,8 +52,7 @@ end
 % according to Mr. Kämpke's paper.
 
 for k = i : length(x_grid)-1
-    % delta, to avoid root finding algorithm receives values, which are
-    % infinity
+
     x_min = max(0,m+x_grid(k) -1);
     x_max = min(x_grid(k),m);
     f = mixed_lorenz_density_function(epsilon_1,epsilon_2,a,x_grid(k),m,b);

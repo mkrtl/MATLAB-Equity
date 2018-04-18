@@ -6,7 +6,7 @@
 
 generate_all_countries; 
 % Equity object is called World
-Welt_2002;
+Welt_2002_kaempke = Welt_2002;
 % Equity object is called Welt_2002_kaempke
 
 World = wbd_data; 
@@ -26,8 +26,8 @@ hold on
 axis([0 1 0 1])
 legend('Daten Weltbank 2016','Standard-Lorenzkurve 2016','Daten Weltbank 2002','Standard-Lorenzkurve 2002','Location','northwest');
 legend('show');
-xlabel('Bevölkerungsanteil x')
-ylabel('Einkommensanteil')
+xlabel('Cumulative Population Share')
+ylabel('Cumulative Income Share')
 
 grid on 
 hold off

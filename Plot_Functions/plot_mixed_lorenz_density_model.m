@@ -15,5 +15,5 @@ grid on
 hold off
 % legend('show','Location','northwest');
 
-axis([0 0.7 0 1])
+axis([0 1 0 4])
 % Fixing of axis to ensure readability of graph
