@@ -1,7 +1,7 @@
 function y = plot_lorenz_curve(states,type,model_data)
 
 
-type_values = {'standard','lorenz','polynomial'};
+type_values = {'standard','pareto','polynomial'};
 model_data_values = {'model','data'};
 if  ~ismember(type,type_values)
     disp("This is no valid type")
