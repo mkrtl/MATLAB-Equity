@@ -43,13 +43,13 @@ box_2.FontSize = 12;
 box_2.LineStyle = 'None';
 
 str = join([varargin{3},' ',string(varargin{1}.year_of_data)]);
-dim_3 = [.15 .40 0 0];
+dim_3 = [.15 .44 0 0];
 box_3 = annotation('textbox',dim_3,'String',str, 'FitBoxToText','on', 'Interpreter','none','FontName','Helvetica');
 box_3.FontSize = 12;
 box_3.LineStyle = 'None';
 
 epsilon_str =   join(['G = ',string(round(varargin{2}.gini_data,2))]);
-dim_4 = [0.15 0.44 0 0];
+dim_4 = [0.15 0.40 0 0];
 box_4 = annotation('textbox',dim_4,'String',epsilon_str, 'FitBoxToText','on');
 box_4.FontSize = 12;
 box_4.LineStyle = 'None';
