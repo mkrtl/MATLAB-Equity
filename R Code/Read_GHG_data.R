@@ -1,0 +1,5 @@
+#install.packages("foreign")
+library(foreign)
+setwd("~/FAW/Werkstudentenstelle/R Code/ChancelPiketty2015Data/ChancelPikettyData")
+dta <- read.dta("World_GHG_Distribution_88_13.dta")
+write.csv2(dta,file = "World_GHG_Distribution_88_13.csv")
